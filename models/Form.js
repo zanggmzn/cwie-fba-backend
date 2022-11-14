@@ -211,6 +211,11 @@ Form.init(
             allowNull: true,
             comment: "ต้องการรับนักศึกษาในรอบหน้า (1=รับ, 0=ไม่รับ)",
         },
+        namecard_file: {
+            type: DataTypes.STRING(100),
+            allowNull: true,
+            comment: "ไฟล์นามบัตร",
+        },
         active: {
             type: DataTypes.TINYINT(1),
             allowNull: false,

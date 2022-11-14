@@ -39,6 +39,10 @@ const methods = {
                 if (typeof(req.files['plan_document_file_upload']) != "undefined"){
                     req.body.plan_document_file = req.files['plan_document_file_upload'][0].path;
                 }
+
+                if (typeof(req.files['namecard_file_upload']) != "undefined"){
+                    req.body.namecard_file = req.files['namecard_file_upload'][0].path;
+                }
             }
 
             let result = await Service.insert(req.body);
@@ -65,6 +69,10 @@ const methods = {
 
                 if (typeof(req.files['plan_document_file_upload']) != "undefined"){
                     req.body.plan_document_file = req.files['plan_document_file_upload'][0].path;
+                }
+
+                if (typeof(req.files['namecard_file_upload']) != "undefined"){
+                    req.body.namecard_file = req.files['namecard_file_upload'][0].path;
                 }
             }
 

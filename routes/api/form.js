@@ -25,11 +25,11 @@ filename: function (req, file, callback) {
 const upload = multer({
 storage: storage,
 fileFilter: (req, file, callback) => {
-    if (file.mimetype == "application/pdf") {
+    if (file.mimetype == "application/pdf" || file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
         callback(null, true);
     } else {
         callback(null, false);
-        return callback(ErrorBadRequest("Only .pdf format allowed!"));
+        return callback(ErrorBadRequest("Only .pdf, .png, .jpg, .jpeg format allowed!"));
     }
 },
 limits: { fieldSize: 10 * 1024 * 1024 }, //10MB

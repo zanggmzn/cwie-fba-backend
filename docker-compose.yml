@@ -40,6 +40,7 @@ services:
         restart: always
         ports:
             - '8084:80'
+            - '9230:9229'
         command: npm run dev
         volumes:
             - '.:/app'
@@ -50,7 +51,7 @@ services:
         depends_on:
             - db
 networks:
-    cwie_fba: 
+    cwie_fba:
         driver: bridge
 # volumes:
 #     db_data:
