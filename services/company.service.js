@@ -176,6 +176,32 @@ const methods = {
             }
         });
     },
+
+    importCompany(data){
+        return new Promise(async (resolve, reject) => {
+          try {
+            let Obj = await db.findOne({
+                where: { name_th: data.name_th },
+            });
+
+            if(Obj === null){
+                try {
+                    let InsertObj = await methods.insert(data);
+                    company_id = InsertObj.company_id;
+                } catch (error) {
+                    console.log(error);
+                    reject(error);
+                }
+            }else{
+                company_id = Obj.company_id;
+            }
+            let res = await methods.findById(company_id);
+            resolve(res);
+          }catch (error) {
+            reject(error);
+          }
+        });
+      },
 };
 
 module.exports = { ...methods };

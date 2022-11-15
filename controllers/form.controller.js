@@ -1,4 +1,5 @@
 const Service = require("../services/form.service"),
+companyService = require("../services/company.service"),
     jwt = require("jsonwebtoken");
 
 const methods = {
@@ -45,6 +46,18 @@ const methods = {
                 }
             }
 
+            if (typeof(req.body.company_id) === "undefined"){
+
+                if(typeof(req.body.company) !== "undefined"){
+                    let company = JSON.parse(req.body.company);
+                    company.created_by = decoded.user_id;
+
+                    const companyObj = await companyService.importCompany(company);
+                    let company_id = companyObj.company_id;
+                    req.body.company_id = company_id;
+                }
+            }
+
             let result = await Service.insert(req.body);
 
             res.success(result, 201);
@@ -56,7 +69,7 @@ const methods = {
     async onUpdate(req, res) {
         try {
             const decoded = jwt.decode(req.headers.authorization.split(" ")[1]);
-            req.body.updated_by = decoded.id;
+            req.body.updated_by = decoded.user_id;
 
             if(typeof(req.files) != "undefined"){
                 if (typeof(req.files['response_document_file_upload']) != "undefined"){
@@ -73,6 +86,18 @@ const methods = {
 
                 if (typeof(req.files['namecard_file_upload']) != "undefined"){
                     req.body.namecard_file = req.files['namecard_file_upload'][0].path;
+                }
+            }
+
+            if (typeof(req.body.company_id) === "undefined"){
+
+                if(typeof(req.body.company) !== "undefined"){
+                    let company = JSON.parse(req.body.company);
+                    company.created_by = decoded.user_id;
+
+                    const companyObj = await companyService.importCompany(company);
+                    let company_id = companyObj.company_id;
+                    req.body.company_id = company_id;
                 }
             }
 
