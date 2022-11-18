@@ -1,6 +1,6 @@
 const Service = require("../services/company.service"),
     jwt = require("jsonwebtoken");
-
+const upload_folder = "company/";
 const methods = {
     async onGetAll(req, res) {
         try {
@@ -26,7 +26,7 @@ const methods = {
             const decoded = jwt.decode(req.headers.authorization.split(" ")[1]);
 
             if (typeof(req.file) != "undefined"){
-                req.body.namecard_file = req.file.path;
+                req.body.namecard_file = upload_folder + req.file.filename;
             }
 
             req.body.created_by = decoded.user_id;
@@ -43,7 +43,7 @@ const methods = {
             const decoded = jwt.decode(req.headers.authorization.split(" ")[1]);
 
             if (typeof(req.file) != "undefined"){
-                req.body.namecard_file = req.file.path;
+                req.body.namecard_file = upload_folder + req.file.filename;
             }
 
             req.body.updated_by = decoded.id;

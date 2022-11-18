@@ -1,7 +1,7 @@
 const Service = require("../services/form.service"),
 companyService = require("../services/company.service"),
     jwt = require("jsonwebtoken");
-
+const upload_folder = "form/";
 const methods = {
     async onGetAll(req, res) {
         try {
@@ -30,19 +30,19 @@ const methods = {
 
             if(typeof(req.files) != "undefined"){
                 if (typeof(req.files['response_document_file_upload']) != "undefined"){
-                    req.body.response_document_file = req.files['response_document_file_upload'][0].path;
+                    req.body.response_document_file = upload_folder + req.files['response_document_file_upload'][0].filename;
                 }
 
                 if (typeof(req.files['workplace_googlemap_file_upload']) != "undefined"){
-                    req.body.workplace_googlemap_file = req.files['workplace_googlemap_file_upload'][0].path;
+                    req.body.workplace_googlemap_file = upload_folder + req.files['workplace_googlemap_file_upload'][0].filename;
                 }
 
                 if (typeof(req.files['plan_document_file_upload']) != "undefined"){
-                    req.body.plan_document_file = req.files['plan_document_file_upload'][0].path;
+                    req.body.plan_document_file = upload_folder + req.files['plan_document_file_upload'][0].filename;
                 }
 
                 if (typeof(req.files['namecard_file_upload']) != "undefined"){
-                    req.body.namecard_file = req.files['namecard_file_upload'][0].path;
+                    req.body.namecard_file = upload_folder + req.files['namecard_file_upload'][0].filename;
                 }
             }
 
@@ -73,19 +73,19 @@ const methods = {
 
             if(typeof(req.files) != "undefined"){
                 if (typeof(req.files['response_document_file_upload']) != "undefined"){
-                    req.body.response_document_file = req.files['response_document_file_upload'][0].path;
+                    req.body.response_document_file = upload_folder + req.files['response_document_file_upload'][0].filename;
                 }
 
                 if (typeof(req.files['workplace_googlemap_file_upload']) != "undefined"){
-                    req.body.workplace_googlemap_file = req.files['workplace_googlemap_file_upload'][0].path;
+                    req.body.workplace_googlemap_file = upload_folder + req.files['workplace_googlemap_file_upload'][0].filename;
                 }
 
                 if (typeof(req.files['plan_document_file_upload']) != "undefined"){
-                    req.body.plan_document_file = req.files['plan_document_file_upload'][0].path;
+                    req.body.plan_document_file = upload_folder + req.files['plan_document_file_upload'][0].filename;
                 }
 
                 if (typeof(req.files['namecard_file_upload']) != "undefined"){
-                    req.body.namecard_file = req.files['namecard_file_upload'][0].path;
+                    req.body.namecard_file = upload_folder + req.files['namecard_file_upload'][0].filename;
                 }
             }
 

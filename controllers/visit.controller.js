@@ -1,6 +1,6 @@
 const Service = require("../services/visit.service"),
     jwt = require("jsonwebtoken");
-
+const upload_folder = "visit/";
 const methods = {
     async onGetAll(req, res) {
         try {
@@ -29,11 +29,11 @@ const methods = {
 
             if(typeof(req.files) != "undefined"){
                 if (typeof(req.files['googlemap_file_upload']) != "undefined"){
-                    req.body.googlemap_file = req.files['googlemap_file_upload'][0].path;
+                    req.body.googlemap_file = upload_folder + req.files['googlemap_file_upload'][0].filename;
                 }
 
                 if (typeof(req.files['report_file_upload']) != "undefined"){
-                    req.body.report_file = req.files['report_file_upload'][0].path;
+                    req.body.report_file = upload_folder + req.files['report_file_upload'][0].filename;
                 }
             }
 
@@ -52,11 +52,11 @@ const methods = {
 
             if(typeof(req.files) != "undefined"){
                 if (typeof(req.files['googlemap_file_upload']) != "undefined"){
-                    req.body.googlemap_file = req.files['googlemap_file_upload'][0].path;
+                    req.body.googlemap_file = upload_folder + req.files['googlemap_file_upload'][0].filename;
                 }
 
                 if (typeof(req.files['report_file_upload']) != "undefined"){
-                    req.body.report_file = req.files['report_file_upload'][0].path;
+                    req.body.report_file = upload_folder + req.files['report_file_upload'][0].filename;
                 }
             }
 

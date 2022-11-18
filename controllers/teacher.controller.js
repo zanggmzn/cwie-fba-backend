@@ -10,6 +10,7 @@ const {
     ErrorNotFound,
     ErrorUnauthorized,
 } = require("../configs/errorMethods");
+const upload_folder = "teacher/";
 const methods = {
     async onGetAll(req, res) {
         try {
@@ -37,7 +38,7 @@ const methods = {
             req.body.created_by = decoded.user_id;
 
             if (typeof(req.file) != "undefined"){
-                req.body.signature_file = req.file.path;
+                req.body.signature_file = upload_folder + req.file.filename;
             }
 
             let result = await Service.insert(req.body);
@@ -55,7 +56,7 @@ const methods = {
 
 
             if (typeof(req.file) != "undefined"){
-                req.body.signature_file = req.file.path;
+                req.body.signature_file = upload_folder + req.file.filename;
             }
 
             const result = await Service.update(req.params.id, req.body);

@@ -1,6 +1,6 @@
 const Service = require("../services/visitImage.service"),
     jwt = require("jsonwebtoken");
-
+const upload_folder = "visit_image/";
 const methods = {
     async onGetAll(req, res) {
         try {
@@ -28,7 +28,7 @@ const methods = {
             req.body.created_by = decoded.user_id;
 
             if (typeof(req.file) != "undefined"){
-                req.body.image_file = req.file.path;
+                req.body.image_file = upload_folder + req.file.filename;
             }
 
             let result = await Service.insert(req.body);
@@ -45,7 +45,7 @@ const methods = {
             req.body.updated_by = decoded.id;
 
             if (typeof(req.file) != "undefined"){
-                req.body.image_file = req.file.path;
+                req.body.image_file = upload_folder + req.file.filename;
             }
 
             const result = await Service.update(req.params.id, req.body);
