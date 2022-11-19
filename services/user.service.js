@@ -13,7 +13,7 @@ const config = require("../configs/app"),
 
 const nodemailer = require("nodemailer");
 const axios = require("axios").default;
-
+const studentService = require("../services/student.service");
 const methods = {
   scopeSearch(req, limit, offset) {
     // Where
@@ -233,6 +233,9 @@ const methods = {
               // );
             }
 
+            let student_code = username.substring(1);
+            console.log("Student",student_code);
+            await studentService.importRegStudent(student_code);
           }
 
           let userObj = await db.findOne({
@@ -245,6 +248,7 @@ const methods = {
             /* ไม่มีข้อมูลใน user db จะต้องตรวจสอบว่าเป็นนักศึกษา หรืออาจารย์ */
             let create_account = false;
             if (account_type == "alumni" || account_type == "student") {
+
               /**
                * find from student db
                * ถ้าเป็นนักศึกษา ให้เพิ่มข้อมูล user

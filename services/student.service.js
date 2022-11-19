@@ -9,6 +9,10 @@ const config = require("../configs/app"),
     } = require("../configs/errorMethods"),
     { Op } = require("sequelize");
 
+const facultyService = require("../services/faculty.service"),
+    departmentService = require("../services/department.service"),
+    majorService = require("../services/major.service");
+
 const methods = {
     scopeSearch(req, limit, offset) {
         // Where
@@ -278,6 +282,51 @@ const methods = {
     //         }
     //     });
     // },
+
+    importRegStudent(id){
+        return new Promise(async (resolve, reject) => {
+            try {
+                const studentObj = await db.findOne({
+                    where: { student_code : id },
+                });
+
+                let saveObj = null;
+
+                if (!studentObj) {
+                    let result = await methods.regStudentInfo(id);
+
+                    /* get faculty and create if not exists */
+                     const faculty = await facultyService.importFaculty({faculty_code:result.faculty_code, faculty_name:result.faculty_name});
+                     let faculty_id = faculty.faculty_id;
+
+                         /* get department and create if not exists */
+                     // const department = await departmentService.importDepartment({department_code:result.department_code, department_name:result.department_name, faculty_id:faculty_id, user_id:user_id});
+                     // let department_id = department.department_id;
+
+                     /* get major and create if not exists */
+                     // const major = await majorService.importMajor({major_code:result.division_code, major_name:result.division_name, department_id:department_id, user_id:user_id});
+                     // let major_id = major.major_id;
+
+                     result['faculty_id'] = faculty_id;
+                     // result['department_id'] = department_id;
+                     // result['major_id'] = major_id;
+
+                     if (!studentObj) {
+                        saveObj = await methods.insert(result);
+                        console.log("Insert student");
+                    }else{
+                        // saveObj = await methods.update(studentObj.student_id, result);
+                        console.log("Update student");
+                    }
+                }else{
+                    console.log("Student already exists");
+                }
+                resolve(saveObj);
+            } catch (error) {
+                reject(error);
+            }
+        });
+    }
 
 };
 

@@ -86,12 +86,12 @@ Student.init(
     },
     department_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       comment: "ภาควิชา",
     },
     major_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       comment: "สาขาวิชา",
     },
     class_year: {
@@ -188,7 +188,7 @@ Student.init(
     },
     created_by: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       comment: "ผู้เพิ่มข้อมูล",
     },
     updatedAt: {
