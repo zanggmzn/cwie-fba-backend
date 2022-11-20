@@ -158,6 +158,7 @@ const Amphur = require("./Amphur");
 const Tumbol = require("./Tumbol");
 const Faculty = require("./Faculty");
 const Department = require("./Department");
+// const Form = require("./Form");
 
 Teacher.belongsTo(User, { foreignKey: "user_id" });
 Teacher.belongsTo(Province, { foreignKey: "province_id" });
@@ -165,5 +166,6 @@ Teacher.belongsTo(Amphur, { foreignKey: "amphur_id" });
 Teacher.belongsTo(Tumbol, { foreignKey: "tumbol_id" });
 Teacher.belongsTo(Faculty, { foreignKey: "faculty_id" });
 Teacher.belongsTo(Department, { foreignKey: "department_id" });
+// Teacher.hasMany(Form, { foreignKey: "supervision_id" , as: 'supervision'});
 
 module.exports = Teacher;

@@ -115,19 +115,11 @@ const methods = {
             ];
         query["order"] = $order;
 
-        query["include"] = [{ all: true, required: false }];
-        // query["include"] = [
-        //     {
-        //         model: Form, as: 'form',
-        //         // attributes: ['amphur_id', 'name_th'],
-        //         // include: [
-        //         //     {
-        //         //         model: Province, as: 'province',
-        //         //         attributes: ['province_id', 'name_th']
-        //         //     }
-        //         // ]
-        //     },
-        // ];
+        // query["include"] = [{ all: true, required: false }];
+        query["include"] = [
+            {all: true, required: false},
+            {model: Form, as: 'forms',include: [{all: true, required: false}]},
+        ];
 
         if (!isNaN(limit)) query["limit"] = limit;
 
