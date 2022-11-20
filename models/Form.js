@@ -2,7 +2,9 @@ const { Model, DataTypes } = require("sequelize"),
     { sequelize } = require("../configs/databases");
 
 class Form extends Model {
-    static associate(models) { }
+    static associate(models) {
+        // this.hasMany(models.Student, { foreignKey: 'student_id', as: 'student' })
+    }
 
     // Custom JSON Response
     //   toJSON() {
@@ -262,7 +264,7 @@ Form.init(
 
 const Teacher = require("./Teacher");
 const Semester = require("./Semester");
-const Student = require("./Student");
+// const Student = require("./Student");
 const Company = require("./Company");
 const FormStaus = require("./FormStatus");
 const Province = require("./Province");
@@ -271,7 +273,7 @@ const Tumbol = require("./Tumbol");
 
 Form.belongsTo(Teacher, { foreignKey: "supervision_id" });
 Form.belongsTo(Semester, { foreignKey: "semester_id" });
-Form.belongsTo(Student, { foreignKey: "student_id" });
+// Form.belongsTo(Student, { foreignKey: "student_id", as: 'student' });
 Form.belongsTo(Company, { foreignKey: "company_id" });
 Form.belongsTo(FormStaus, { foreignKey: "status_id" });
 Form.belongsTo(Province, { foreignKey: "response_province_id" });

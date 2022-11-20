@@ -12,7 +12,7 @@ const config = require("../configs/app"),
 const facultyService = require("../services/faculty.service"),
     departmentService = require("../services/department.service"),
     majorService = require("../services/major.service");
-
+const Form = require("../models/Form");
 const methods = {
     scopeSearch(req, limit, offset) {
         // Where
@@ -116,6 +116,18 @@ const methods = {
         query["order"] = $order;
 
         query["include"] = [{ all: true, required: false }];
+        // query["include"] = [
+        //     {
+        //         model: Form, as: 'form',
+        //         // attributes: ['amphur_id', 'name_th'],
+        //         // include: [
+        //         //     {
+        //         //         model: Province, as: 'province',
+        //         //         attributes: ['province_id', 'name_th']
+        //         //     }
+        //         // ]
+        //     },
+        // ];
 
         if (!isNaN(limit)) query["limit"] = limit;
 

@@ -233,8 +233,9 @@ const methods = {
               // );
             }
 
+            /* เพิ่มข้อมูลนักศึกษาเข้าตาราง Student */
             let student_code = username.substring(1);
-            console.log("Student",student_code);
+            // console.log("Student",student_code);
             await studentService.importRegStudent(student_code);
           }
 

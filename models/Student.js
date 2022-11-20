@@ -3,7 +3,8 @@ const { Model, DataTypes } = require("sequelize"),
 
 class Student extends Model {
   static associate(models) {
-    // this.hasMany(models.Department, { foreignKey: 'faculty_id' });
+    // this.hasMany(models.Form, { foreignKey: 'student_id' });
+    // this.hasMany(models.Form, { foreignKey: 'student_id', as: 'form' })
   }
 
   // Custom JSON Response
@@ -226,6 +227,7 @@ const Department = require("./Department");
 const Major = require("./Major");
 const Teacher = require("./Teacher");
 const PrefixName = require("./PrefixName");
+const Form = require("./Form");
 
 Student.belongsTo(Province, { foreignKey: "province_id" });
 Student.belongsTo(Amphur, { foreignKey: "amphur_id" });
@@ -235,5 +237,9 @@ Student.belongsTo(Department, { foreignKey: "department_id" });
 Student.belongsTo(Major, { foreignKey: "major_id" });
 Student.belongsTo(Teacher, {as: 'advisor', foreignKey: "advisor_id" });
 Student.belongsTo(PrefixName, { foreignKey: "prefix_id" });
-
+Student.hasMany(Form, {as: 'forms',  foreignKey: "student_id",targetKey: 'student_id' });
+// Student.hasMany(Form, {
+//   foreignKey: 'student_id',
+//   as: 'formx'
+// });
 module.exports = Student;
