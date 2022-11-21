@@ -225,7 +225,7 @@ const Tumbol = require("./Tumbol");
 const Faculty = require("./Faculty");
 const Department = require("./Department");
 const Major = require("./Major");
-// const Teacher = require("./Teacher");
+const Teacher = require("./Teacher");
 const PrefixName = require("./PrefixName");
 const Form = require("./Form");
 
@@ -235,7 +235,7 @@ Student.belongsTo(Tumbol, { foreignKey: "tumbol_id" });
 Student.belongsTo(Faculty, { foreignKey: "faculty_id" });
 Student.belongsTo(Department, { foreignKey: "department_id" });
 Student.belongsTo(Major, { foreignKey: "major_id" });
-// Student.belongsTo(Teacher, {as: 'advisor', foreignKey: "advisor_id" });
+Student.belongsTo(Teacher, {as: 'advisor', foreignKey: "advisor_id" });
 Student.belongsTo(PrefixName, { foreignKey: "prefix_id" });
 Student.hasMany(Form, {as: 'forms',  foreignKey: "student_id",targetKey: 'student_id' });
 // Student.hasMany(Form, {
