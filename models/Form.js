@@ -270,6 +270,7 @@ const FormStaus = require("./FormStatus");
 const Province = require("./Province");
 const Amphur = require("./Amphur");
 const Tumbol = require("./Tumbol");
+const RejectLog = require("./RejectLog");
 
 Form.belongsTo(Teacher, { foreignKey: "supervision_id", as: 'supervision'});
 Form.belongsTo(Semester, { foreignKey: "semester_id" });
@@ -280,5 +281,6 @@ Form.belongsTo(Province, { foreignKey: "response_province_id" });
 Form.belongsTo(Province, { foreignKey: "province_id" });
 Form.belongsTo(Amphur, { foreignKey: "amphur_id" });
 Form.belongsTo(Tumbol, { foreignKey: "tumbol_id" });
+Form.hasMany(RejectLog, { foreignKey: "form_id" });
 
 module.exports = Form;

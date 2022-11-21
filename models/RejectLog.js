@@ -55,7 +55,7 @@ RejectLog.init(
         },
         created_by: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
             comment: "ผู้เพิ่มข้อมูล",
         },
         updatedAt: {
@@ -86,9 +86,9 @@ RejectLog.init(
 );
 
 const User = require("./User");
-const Form = require("./Form");
+// const Form = require("./Form");
 
 RejectLog.belongsTo(User, { foreignKey: "user_id" });
-RejectLog.belongsTo(Form, { foreignKey: "form_id" });
+// RejectLog.belongsTo(Form, { foreignKey: "form_id" });
 
 module.exports = RejectLog;

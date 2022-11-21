@@ -238,8 +238,5 @@ Student.belongsTo(Major, { foreignKey: "major_id" });
 Student.belongsTo(Teacher, {as: 'advisor', foreignKey: "advisor_id" });
 Student.belongsTo(PrefixName, { foreignKey: "prefix_id" });
 Student.hasMany(Form, {as: 'forms',  foreignKey: "student_id",targetKey: 'student_id' });
-// Student.hasMany(Form, {
-//   foreignKey: 'student_id',
-//   as: 'formx'
-// });
+
 module.exports = Student;
