@@ -211,6 +211,7 @@ const methods = {
     };
 
     return new Promise(async (resolve, reject) => {
+
       try {
         const loginObj = await axios(config)
           .then((response) => {
@@ -219,9 +220,13 @@ const methods = {
           .catch((error) => error);
 
         if (typeof loginObj.userInfo !== "undefined") {
+
+          let teacherObj = null;
+
           const account_type = loginObj.userInfo.account_type;
           const username = loginObj.userInfo.username;
           const citizen_id = loginObj.userInfo.pid;
+          let create_account_type = 0;
 
           if (account_type == "alumni" || account_type == "student") {
             /* ตรวจสอบคณะจากรหัสนักศึกษา  */
@@ -249,12 +254,12 @@ const methods = {
             /* ไม่มีข้อมูลใน user db จะต้องตรวจสอบว่าเป็นนักศึกษา หรืออาจารย์ */
             let create_account = false;
             if (account_type == "alumni" || account_type == "student") {
-
               /**
                * find from student db
                * ถ้าเป็นนักศึกษา ให้เพิ่มข้อมูล user
                */
               create_account = true;
+              create_account_type = 1; //Student
             } else {
               /**
                * find from teacher db
@@ -263,15 +268,17 @@ const methods = {
                *
                * ถ้าเข้าใช้งานครั้งแรก จะหาข้อมูลอาจารย์ยังไง
                * */
-              let teacherObj = await dbTeacher.findOne({
-                where: { citizen_id: loginObj.userInfo.pid },
+
+              teacherObj = await dbTeacher.findOne({
+                where: { citizen_id: citizen_id },
               });
-              console.log(loginObj.userInfo.pid);
 
               if (!teacherObj) {
                 reject(ErrorUnauthorized("ไม่มีสิทธิ์เข้าใช้งาน กรุณาติดต่องานสหกิจศึกษา คณะบริหารธุรกิจ"));
               }else{
+                // พบข้อมูลในตาราง Teacher เป็นอาจารย์
                 create_account = true;
+                create_account_type = 2; //Teacher
               }
             }
 
@@ -281,10 +288,17 @@ const methods = {
                 name: loginObj.userInfo.displayname,
                 email: loginObj.userInfo.email,
                 citizen_id: loginObj.userInfo.pid,
-                account_type:
-                  loginObj.userInfo.account_type == "personel" ? 3 : 1,
+                // account_type:loginObj.userInfo.account_type == "personel" ? 2 : 1,
+                account_type:create_account_type
               };
               userObj = await methods.insert(insertData);
+
+              /* มีข้อมูลอาจารย์ในตาราง Teacher และยังไม่มี user_id */
+              if(teacherObj && teacherObj.user_id === null){
+                /* ยังไม่มี user_id */
+                  await dbTeacher.update({user_id:userObj.user_id}, { where: { teacher_id: teacherObj.teacher_id } });
+              }
+
             }
 
           }else{ /* มีข้อมูลในตาราง User แล้ว (เจ้าหน้าที่คณะ) */
@@ -293,7 +307,6 @@ const methods = {
                 citizen_id: loginObj.userInfo.pid,
               };
 
-              // userObj = await methods.update(userObj.user_id, updateData);
               userObj = await methods.findById(userObj.user_id);
           }
 
