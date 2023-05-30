@@ -2,12 +2,12 @@ const config = require("./app");
 const { Sequelize } = require("sequelize");
 
 const sequelize = new Sequelize(
-  config.DbDatabase,
-  config.DbUsername,
-  config.DbPassword,
+  process.env.DbDatabase,
+  process.env.DbUsername,
+  process.env.DbPassword,
   {
-    host: config.DbHostname,
-    port: config.DbPort,
+    host: process.env.DbHostname,
+    port: process.env.DbPort,
     dialect: "mysql",
     operatorsAlias: false,
     pool: {
